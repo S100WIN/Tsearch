@@ -4,11 +4,11 @@ from bs4 import BeautifulSoup
 
 class Tsearch():
     def __init__(self):
-        self.validArgumentList = ['-w','-u','-r','-o','-d','-v','-h','--help']
+        self.validArgumentList = ['--nocss','-w','-u','-r','-o','-d','-v','-h','--help']
         self.keyList= ["key","api","secret","password","username","config","document.location","url","postmessage"
                        ,"innerhtml","eval(","document.write","location.href","document.url","document.cookies"
                        ,"navigation.referrer","window.name","settimeout","setinterval","location.assign"
-                       ,"admin","token",]
+                       ,"admin","token","permission","client","host"]
         self.setArgument()     
     def makeRequest(self,url):
         try:
@@ -42,17 +42,19 @@ class Tsearch():
             if src == None:
                 continue
             if  not "http" in src: 
-                list.append(self.response.url+src)
-        relLinks = link = self.soup.findAll("link")
-        for  n in relLinks:
-            href = n.get("href")
-            if href == None:
-                continue
-            if  not "http" in href: 
-                list.append(self.response.url+href)
+                list.append(self.core+src)
+        if self.nocss == False:
+            relLinks = link = self.soup.findAll("link")
+            for  n in relLinks:
+                href = n.get("href")
+                if href == None:
+                    continue
+                if  not "http" in href: 
+                    list.append(self.core+href)
         return list
     def setArgument(self):
         validCount = 0
+        self.nocss = False
         if len(sys.argv) == 1:
             self.help()
             sys.exit()
@@ -66,10 +68,15 @@ class Tsearch():
                                 self.w = sys.argv[count+1]
                             case "-u":
                                 self.u = sys.argv[count+1]
+                                a = self.u.split("/")
+                                self.core = f"{a[0]}/{a[1]}/{a[2]}/"
+                                print(self.core)
                             case "-r":
                                 self.r = sys.argv[count+1]
                             case "-o":
                                 self.o = sys.argv[count+1]
+                            case "--nocss":
+                                self.nocss = True
                             case "-d":
                                 self.d = sys.argv[count+1]
                             case "-v":
@@ -97,6 +104,7 @@ Arguments              Description
 -o                      Set a output file
 -d                      Debug mode on
 -v                      Set verbose mode true (Default: false)
+--nocss                 For the not searching css file 
 -h / --help             Help
 
 Example
