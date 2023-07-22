@@ -8,7 +8,7 @@ class Tsearch():
         self.keyList= ["key","api","secret","password","username","config","document.location","url","postmessage"
                        ,"innerhtml","eval(","document.write","location.href","document.url","document.cookies"
                        ,"navigation.referrer","window.name","settimeout","setinterval","location.assign"
-                       ,"admin","token","permission","client","host"]
+                       ,"admin","token","permission","client","host","portal","auth","jwt","bearer","ssrf","https://"]
         self.setArgument()     
     def makeRequest(self,url):
         try:
@@ -70,7 +70,6 @@ class Tsearch():
                                 self.u = sys.argv[count+1]
                                 a = self.u.split("/")
                                 self.core = f"{a[0]}/{a[1]}/{a[2]}/"
-                                print(self.core)
                             case "-r":
                                 self.r = sys.argv[count+1]
                             case "-o":
