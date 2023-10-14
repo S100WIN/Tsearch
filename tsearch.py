@@ -8,8 +8,10 @@ class Tsearch():
         self.keyList= ["key","api","secret","password","username","config","document.location","url","postmessage"
                        ,"innerhtml","eval(","document.write","location.href","document.url","document.cookies"
                        ,"navigation.referrer","window.name","settimeout","setinterval","location.assign"
-                       ,"admin","token","permission","client","host","portal","auth","jwt","bearer","ssrf","https://"]
+                       ,"admin","token","permission","client","host","portal","auth","jwt","bearer","ssrf","https://"
+                       ,"graphql","port","xml","sql","route","JSON.stringify"]
         self.setArgument()     
+        print("\n***************************************")
     def makeRequest(self,url):
         try:
             headers = {
